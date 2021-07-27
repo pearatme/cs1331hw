@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class SourceModel {
-    static int aCode = (int) 'a';
+    static int aCode = 'a';
 
     String name, path;
     double[][] characterProbs;
@@ -27,13 +27,19 @@ public class SourceModel {
 
         System.out.printf("Training %s model ... ", name);
 
-        for (int i = 1; i < text.length(); i++) {
-            char pCharCode = text.charAt(i - 1);
+        char pCharCode = '!';
+        for (int i = 0; i < text.length(); i++) {
+            if (pCharCode == '!' && Character.isAlphabetic(text.charAt(i))) {
+                pCharCode = text.charAt(i);
+                continue;
+            }
+
             char nCharCode = text.charAt(i);
-            if (!Character.isAlphabetic(pCharCode) || !Character.isAlphabetic(nCharCode))
+            if (!Character.isAlphabetic(nCharCode))
                 continue;
 
             characterCounts[(int) pCharCode - aCode][(int) nCharCode - aCode]++;
+            pCharCode = nCharCode;
         }
 
         for (int i = 0; i < 26; i++) {
@@ -53,16 +59,15 @@ public class SourceModel {
     }
 
     public String toString() {
-        String result = "";
-        result += " \t";
+        String result = "  ";
         for (int a = 0; a < 26; a++)
-            result += (char)(aCode + a) + "\t";
+            result += "     " + (char)(aCode + a);
         result += "\n";
 
         for (int i = 0; i < 26; i++) {
-            result += (char)(aCode + i) + "\t";
+            result += " " + (char)(aCode + i);
             for (int j = 0; j < 26; j++)
-                result += String.format("%.2f\t", this.characterProbs[i][j]);
+                result += String.format("%6.2f", this.characterProbs[i][j]);
             result += "\n";
         }
         return result;
@@ -96,8 +101,10 @@ public class SourceModel {
             if (probs[maxIndex] < probs[i])
                 maxIndex = i;
         }
+
 		for (int i = 0; i < args.length - 1; i++)
 			System.out.printf("Probability that test string is %-10s:%.2f\n",
                     models[i].getName(), probs[i] / totalProb);
+		System.out.printf("Test string is most likely %s.", models[maxIndex].getName());
     }
 }
