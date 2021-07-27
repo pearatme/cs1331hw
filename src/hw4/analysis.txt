@@ -1,0 +1,9 @@
+1. Why is this not good style?
+    Using instanceof is bad practice in this case because it does not allow the classes to be extended. If someone
+wanted to extend the RogueAI class or AI class in general, it would not work with the save the day method because
+it would just act like the RandomAI class.
+
+2. What changes could we make to AI and it’s subclasses to avoid using instanceof?
+    In order to avoid using instanceof, the saveTheDay methods functionality could be moved to the AI class and then
+made abstract for each of the subclasses to implement. This way, any class which expands upon the AI class can have a
+custom saveTheDay method.
