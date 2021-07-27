@@ -97,6 +97,7 @@ public class SourceModel {
                 maxIndex = i;
         }
 		for (int i = 0; i < args.length - 1; i++)
-			System.out.printf("Probability that test string is %-10s:%.2f\n", models[i].getName(), probs[i] / totalProb);
+			System.out.printf("Probability that test string is %-10s:%.2f\n",
+                    models[i].getName(), probs[i] / totalProb);
     }
 }
