@@ -1,0 +1,6 @@
+# IDE exclusions
+/.idea/
+cs1331hw.iml
+
+# Project exclusions
+/out/
