@@ -76,14 +76,22 @@ public class SourceModel {
     public double probability(String string) {
         string = string.toLowerCase();
         double prob = 1;
-        for (int i = 1; i < string.length(); i++) {
-            char pCharCode = string.charAt(i - 1);
+
+        char pCharCode = '!';
+        for (int i = 0; i < string.length(); i++) {
+            if (pCharCode == '!' && Character.isAlphabetic(string.charAt(i))) {
+                pCharCode = string.charAt(i);
+                continue;
+            }
+
             char nCharCode = string.charAt(i);
-            if (!Character.isAlphabetic(pCharCode) || !Character.isAlphabetic(nCharCode))
+            if (!Character.isAlphabetic(nCharCode))
                 continue;
 
             prob *= this.characterProbs[(int) pCharCode - aCode][(int) nCharCode - aCode];
+            pCharCode = nCharCode;
         }
+
         return prob;
     }
 
