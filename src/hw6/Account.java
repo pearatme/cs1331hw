@@ -47,14 +47,12 @@ public class Account {
     }
 
     public List<Transaction> getWithdrawals() {
-        class IsWithdrawal<E> implements Predicate<Transaction> {
+        return this.findTransactionsByPredicate(new Predicate<Transaction>() {
             @Override
             public boolean test(Transaction transaction) {
                 return transaction.getType() == TransactionType.WITHDRAWAL;
             }
-        }
-
-        return this.findTransactionsByPredicate(new IsWithdrawal<Transaction>());
+        });
     }
 
     public List<Transaction> getDeposits() {
