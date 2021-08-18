@@ -4,3 +4,5 @@ cs1331hw.iml
 
 # Project exclusions
 /out/
+
+/libraries/
